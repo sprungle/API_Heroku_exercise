@@ -1,10 +1,20 @@
 const express =  require('express');
 
+const dotenv = require('dotenv');
+
 const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({extended:false}));
+
+app.use(function(request, response, next){
+    console.log("I am a a middleware");
+    next();
+});
 
 app.get('/', function(request, response){  //forward slash is path for the method
     console.log("get method");      //prints on console
-    response.send("Test 1");       //prints in browser
+    response.send("Test nodemon");       //prints in browser
 });
 
 app.get('/second', function(request, response){
@@ -30,5 +40,6 @@ app.post('/wholeName', function(request, response){
     console.log(request.body);
 })
 
-const port = 3000;
-app.listen(port);
+// const port = 3000;
+// app.listen(port);
+app.listen(process.env.PORT);
